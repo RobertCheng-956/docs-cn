@@ -7,9 +7,12 @@ aliases: ['/docs-cn/dev/sql-mode/','/docs-cn/dev/reference/sql/sql-mode/']
 
 TiDB 服务器采用不同 SQL 模式来操作，且不同客户端可以应用不同模式。SQL 模式定义 TiDB 支持哪些 SQL 语法及执行哪种数据验证检查。
 
-TiDB 启动之后采用 `SET [ SESSION | GLOBAL ] sql_mode='modes'` 设置 SQL 模式。设置 `GLOBAL` 级别的 SQL 模式时用户需要有 `SUPER` 权限，并且只会影响到从设置 SQL 模式开始后续新建立的连接（注：老连接不受影响）。`SESSION` 级别的 SQL 模式的变化只会影响当前的客户端。
+TiDB 启动之后，你可以使用 `SET [ SESSION | GLOBAL ] sql_mode='modes'` 语句设置 SQL 模式。
 
-`Modes` 是用逗号 (',') 间隔开的一系列不同的模式。使用 `SELECT @@sql_mode` 语句查询当前 SQL 模式，SQL 模式默认值：`ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION`。
+- 设置 `GLOBAL` 级别的 SQL 模式时用户需要有 `SUPER` 权限，并且只会影响到从设置 SQL 模式开始后续新建立的连接（注：老连接不受影响）。
+- `SESSION` 级别的 SQL 模式的变化只会影响当前的客户端。
+
+在该语句中，`modes` 是用逗号 (`,`) 间隔开的一系列不同的模式。使用 `SELECT @@sql_mode` 语句查询当前 SQL 模式，SQL 模式默认值：`ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION`。
 
 ## 重要的 sql_mode 值
 
@@ -30,7 +33,7 @@ TiDB 启动之后采用 `SET [ SESSION | GLOBAL ] sql_mode='modes'` 设置 SQL �
 | `NO_KEY_OPTIONS` | 使用 `SHOW CREATE TABLE` 时不会输出 MySQL 特有的语法部分，如 `ENGINE`，使用 mysqldump 跨 DB 种类迁移的时需要考虑此选项（仅语法支持）|
 | `NO_FIELD_OPTIONS` | 使用 `SHOW CREATE TABLE` 时不会输出 MySQL 特有的语法部分，如 `ENGINE`，使用 mysqldump 跨 DB 种类迁移的时需要考虑此选项（仅语法支持）|
 | `NO_TABLE_OPTIONS` | 使用 `SHOW CREATE TABLE` 时不会输出 MySQL 特有的语法部分，如 `ENGINE`，使用 mysqldump 跨 DB 种类迁移的时需要考虑此选项（仅语法支持）|
-| `NO_AUTO_VALUE_ON_ZERO` | 若启用该模式，在AUTO_INCREMENT列的处理传入的值是 `0`或者具体数值时系统直接将该值写入此列，传入 `NULL` 时系统自动生成下一个序列号（支持）|
+| `NO_AUTO_VALUE_ON_ZERO` | 若启用该模式，在AUTO_INCREMENT列的处理传入的值是 `0` 或者具体数值时系统直接将该值写入此列，传入 `NULL` 时系统自动生成下一个序列号（支持）|
 | `NO_BACKSLASH_ESCAPES` | 若启用该模式，`\` 反斜杠符号仅代表它自己（支持）|
 | `STRICT_TRANS_TABLES` | 对于事务存储引擎启用严格模式，insert非法值之后，回滚整条语句（支持）|
 | `STRICT_ALL_TABLES` | 对于事务型表，写入非法值之后，回滚整个事务语句（支持）|
